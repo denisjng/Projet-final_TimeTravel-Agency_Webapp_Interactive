@@ -81,4 +81,4 @@ Checklist:
 - Auteur: Denis POPESCU
 
 ## Licence
-Projet pedagogique (M1/M2 Digital & IA).
+Projet pedagogique (M1 Expert IA).
