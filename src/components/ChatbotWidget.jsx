@@ -76,35 +76,73 @@ const classifyProfile = (score) => {
   return 'Profil ouvert'
 }
 
-const getVictorAnswer = (text, recommendedDestinationId) => {
-  const q = text.toLowerCase()
+const SYSTEM_PROMPT = `Tu es Victor, l'assistant virtuel de TimeTravel Agency, une agence de voyage temporel de luxe.
 
-  if (/prix|budget|cout|tarif/.test(q)) {
-    return 'Nos tarifs: Paris 1889 (2500 EUR), Florence 1504 (3200 EUR), Cretace (5000 EUR). Je peux vous orienter selon votre budget.'
+Ton rôle: Conseiller les clients sur les meilleures destinations temporelles.
+
+Ton ton:
+- Professionnel mais chaleureux
+- Passionné d'histoire
+- Toujours enthousiaste sans être trop familier
+- Expertise en voyage temporel (fictif mais crédible)
+
+Destinations disponibles:
+1. Paris 1889 - Belle Époque, Tour Eiffel, Exposition Universelle et raffinement parisien. À partir de 2500 EUR.
+2. Crétacé - Aventure préhistorique avec dinosaures et nature sauvage. À partir de 5000 EUR.
+3. Florence 1504 - Renaissance, art, architecture et univers de Michel-Ange. À partir de 3200 EUR.
+
+Tu peux répondre à:
+- Questions sur les destinations
+- Informations sur les prix
+- Conseils pour choisir une époque
+- FAQ agence de voyage
+- Suggestions de destinations selon les intérêts du client
+
+Sois concis, utile et inspirant. Réponds en français.`
+
+const callMistralAPI = async (userMessage, recommendedDestinationId) => {
+  const apiKey = import.meta.env.VITE_MISTRAL_API_KEY
+  if (!apiKey) {
+    console.warn('API key not found, using fallback response')
+    return 'Je dois être configuré avec une clé API. Veuillez réessayer plus tard.'
   }
 
-  if (/culture|artistique|musee|renaissance/.test(q)) {
-    return `Pour un profil culturel, Florence 1504 est ideale: ${DESTINATION_INFO['florence-1504'].pitch}`
-  }
+  try {
+    const contextMessage = recommendedDestinationId
+      ? `Note: L'utilisateur a une recommandation personnalisée: ${DESTINATION_INFO[recommendedDestinationId].name}`
+      : ''
 
-  if (/nature|aventure|faune|cretace|dino/.test(q)) {
-    return `Pour une experience aventure, je recommande Cretace: ${DESTINATION_INFO.cretaceous.pitch}`
-  }
+    const fullMessage = contextMessage ? `${contextMessage}\n\nUtilisateur: ${userMessage}` : userMessage
 
-  if (/elegance|raffinement|paris|luxe/.test(q)) {
-    return `Pour l elegance et le luxe, Paris 1889 est parfait: ${DESTINATION_INFO['paris-1889'].pitch}`
-  }
+    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'mistral-small-latest',
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: fullMessage },
+        ],
+        temperature: 0.7,
+        max_tokens: 256,
+      }),
+    })
 
-  if (/reservation|reserver|agence|faq/.test(q)) {
-    return 'Reservation simple: choisissez votre destination, indiquez vos dates et votre profil, puis notre equipe vous contacte rapidement avec une proposition personnalisee.'
-  }
+    if (!response.ok) {
+      const error = await response.json()
+      console.error('Mistral API error:', error)
+      return 'Je n\'arrive pas à répondre pour le moment. Veuillez réessayer.'
+    }
 
-  if (/conseille|recommande|quelle epoque/.test(q) && recommendedDestinationId) {
-    const target = DESTINATION_INFO[recommendedDestinationId]
-    return `Selon votre profil actuel, je recommande ${target.name}. ${target.pitch} ${target.price}.`
+    const data = await response.json()
+    return data.choices?.[0]?.message?.content || 'Pas de réponse reçue.'
+  } catch (error) {
+    console.error('Mistral API call failed:', error)
+    return 'Erreur de connexion. Veuillez vérifier votre configuration.'
   }
-
-  return 'Je peux vous aider sur les destinations, les prix, les conseils d epoque et les questions pratiques de reservation.'
 }
 
 function ChatbotWidget({ onApplyRecommendation }) {
@@ -162,11 +200,10 @@ function ChatbotWidget({ onApplyRecommendation }) {
     }
   }, [])
 
-  const sendMessage = (text) => {
+  const sendMessage = async (text) => {
     const trimmed = text.trim()
     if (!trimmed || isThinking) return
 
-    const answer = getVictorAnswer(trimmed, quizSubmitted ? quizResult.bestId : null)
     setMessages((prev) => [...prev, { role: 'user', content: trimmed }])
     setInput('')
     setIsThinking(true)
@@ -175,6 +212,9 @@ function ChatbotWidget({ onApplyRecommendation }) {
     if (QUICK_QUESTIONS.includes(trimmed)) {
       setUsedQuickQuestions((prev) => new Set(prev).add(trimmed))
     }
+
+    // Appeler l'API Mistral
+    const answer = await callMistralAPI(trimmed, quizSubmitted ? quizResult.bestId : null)
 
     responseTimerRef.current = setTimeout(() => {
       setMessages((prev) => [...prev, { role: 'assistant', content: answer }])
