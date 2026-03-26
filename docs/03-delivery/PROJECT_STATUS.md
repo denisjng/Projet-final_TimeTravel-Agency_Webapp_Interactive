@@ -208,11 +208,11 @@ F12 DevTools → Network tab
 
 ### 📝 Reference Documents
 
-All guides in `/docs/`:
-- **Start here**: `PHASE_2_2_STEP_BY_STEP.md` (easiest path)
-- **Detailed**: `PHASE_2_2_ASSETS_INTEGRATION.md` (complete)
-- **Platforms**: `HOSTING_PLATFORMS_GUIDE.md` (if choosing different hosts)
-- **Quick ref**: `PHASE_2_2_CHECKLIST.md` (checklist & tips)
+All guides in `/docs/02-implementation/`:
+- **Start here**: `../02-implementation/PHASE_2_2_STEP_BY_STEP.md` (easiest path)
+- **Detailed**: `../02-implementation/PHASE_2_2_ASSETS_INTEGRATION.md` (complete)
+- **Platforms**: `../02-implementation/HOSTING_PLATFORMS_GUIDE.md` (if choosing different hosts)
+- **Quick ref**: `../02-implementation/PHASE_2_2_CHECKLIST.md` (checklist & tips)
 
 ---
 

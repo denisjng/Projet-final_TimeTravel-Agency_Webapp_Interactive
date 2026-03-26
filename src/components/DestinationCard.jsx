@@ -40,8 +40,8 @@ const DestinationCard = ({ destination, imageUrl, onCardClick }) => {
           <img
             src={imageUrl}
             alt={`${destination.name} destination hero image`}
-            loading="lazy" {/* Browser-native lazy loading */}
-            decoding="async" {/* Async decoding for better performance */}
+            loading="lazy"
+            decoding="async"
             className={`destination-hero-image ${imageLoaded ? 'loaded' : ''}`}
             onLoad={handleImageLoad}
             onError={handleImageError}

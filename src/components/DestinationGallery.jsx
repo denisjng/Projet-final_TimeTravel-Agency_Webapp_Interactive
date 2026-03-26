@@ -3,11 +3,10 @@
 
 import React, { useState, useEffect } from 'react'
 import DestinationCard from './DestinationCard'
-import { DESTINATION_IMAGES } from '../constants/assets'
+import { getImageUrl } from '../constants/assets'
 import './DestinationGallery.css'
 
 const DestinationGallery = ({ destinations, onDestinationSelect }) => {
-  const [selectedDestination, setSelectedDestination] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -20,7 +19,6 @@ const DestinationGallery = ({ destinations, onDestinationSelect }) => {
   }, [])
 
   const handleCardClick = (destinationId) => {
-    setSelectedDestination(destinationId)
     onDestinationSelect?.(destinationId)
   }
 
@@ -52,8 +50,7 @@ const DestinationGallery = ({ destinations, onDestinationSelect }) => {
         {/* Destination Cards Grid */}
         <div className="cards-grid">
           {destinations.map(destination => {
-            const imageData = DESTINATION_IMAGES[destination.id.toUpperCase().replace('-', '_')]
-            const imageUrl = imageData?.heroUrl
+            const imageUrl = getImageUrl(destination.id)
 
             return (
               <DestinationCard
