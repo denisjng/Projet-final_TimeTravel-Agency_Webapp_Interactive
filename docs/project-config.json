@@ -1,0 +1,335 @@
+{
+  "projectInfo": {
+    "name": "TimeTravel Agency - Webapp Interactive",
+    "version": "1.0.0",
+    "phase": "1.1",
+    "status": "Features Definition - Active",
+    "duration": "2 hours",
+    "groupSize": 4,
+    "deploymentTarget": "Vercel"
+  },
+  "destinations": [
+    {
+      "id": "paris-1889",
+      "name": "Paris 1889",
+      "year": 1889,
+      "era": "Belle Époque",
+      "shortDesc": "Découvrez la Belle Époque lors de l'Exposition Universal et l'inauguration spectaculaire de la Tour Eiffel",
+      "heroImageUrl": "TO_BE_FILLED_SESSION1",
+      "tags": ["Art", "Histoire", "Gastronomie", "Architecture", "Luxury"],
+      "activities": [
+        "Visiter la Tour Eiffel",
+        "Exposition Universelle 1889",
+        "Spectacles Belle Époque (Moulin Rouge)",
+        "Dîners gastronomiques"
+      ],
+      "price": {
+        "min": 2500,
+        "currency": "EUR"
+      },
+      "recommendedDays": [3, 5],
+      "bestMonths": ["April", "May", "September", "October"],
+      "dangerLevel": "Very Low",
+      "interestMatch": {
+        "cultural": 100,
+        "adventure": 20,
+        "elegance": 95
+      }
+    },
+    {
+      "id": "cretaceous",
+      "name": "Crétacé",
+      "year": -65000000,
+      "era": "Prehistoric",
+      "shortDesc": "Aventure parmi les dinosaures: explorez la nature préhistorique sauvage avant l'extinction",
+      "heroImageUrl": "TO_BE_FILLED_SESSION1",
+      "tags": ["Aventure", "Nature", "Science", "Exploration", "Action"],
+      "activities": [
+        "Safari dinosaures en véhicule blindé",
+        "Exploration jungle préhistorique",
+        "Observation faune et flore",
+        "Photography aventure"
+      ],
+      "price": {
+        "min": 5000,
+        "currency": "EUR"
+      },
+      "recommendedDays": [5, 7],
+      "bestMonths": ["November", "December", "February", "March"],
+      "dangerLevel": "High",
+      "specialRequirements": [
+        "Physical fitness required",
+        "Specialized equipment provided",
+        "Insurance included"
+      ],
+      "interestMatch": {
+        "cultural": 40,
+        "adventure": 100,
+        "elegance": 30
+      }
+    },
+    {
+      "id": "florence-1504",
+      "name": "Florence 1504",
+      "year": 1504,
+      "era": "Renaissance",
+      "shortDesc": "L'apothéose de la Renaissance: Michel-Ange vient de terminer le David, Florence baigne dans l'art et le génie créatif",
+      "heroImageUrl": "TO_BE_FILLED_SESSION1",
+      "tags": ["Art", "Histoire", "Culture", "Renaissance", "Architecture"],
+      "activities": [
+        "Visite du David fraîchement dévoilé",
+        "Visite ateliers d'artistes",
+        "Tours architecture Renaissance",
+        "Dîner Renaissance"
+      ],
+      "price": {
+        "min": 3200,
+        "currency": "EUR"
+      },
+      "recommendedDays": [4, 5],
+      "bestMonths": ["April", "September", "October"],
+      "dangerLevel": "Low",
+      "specialRequirements": "Interest in art and history recommended",
+      "interestMatch": {
+        "cultural": 100,
+        "adventure": 15,
+        "elegance": 85
+      }
+    }
+  ],
+  "chatbot": {
+    "name": "Victor",
+    "role": "Virtual assistant for luxury time travel",
+    "personality": {
+      "traits": [
+        "Professional yet warm",
+        "Passionate about history",
+        "Enthusiastic but not overly familiar",
+        "Expert and credible",
+        "Slightly humorous about time travel"
+      ],
+      "tone": "Premium luxury service with human touch"
+    },
+    "capabilities": [
+      "Answer destination questions",
+      "Recommend destinations based on preferences",
+      "Provide pricing and logistics information",
+      "Give personalized travel advice",
+      "Tell engaging destination stories",
+      "Handle reservation inquiries"
+    ],
+    "knowledgeBase": {
+      "destinations": ["paris-1889", "cretaceous", "florence-1504"],
+      "faqTopics": [
+        "Pricing",
+        "Best season to visit",
+        "Activity recommendations",
+        "Safety information",
+        "Equipment requirements",
+        "Cancellation policies",
+        "Payment methods"
+      ]
+    }
+  },
+  "features": {
+    "homepage": {
+      "sections": [
+        "Header with navigation",
+        "Hero section with video/animation",
+        "Agency presentation",
+        "Call-to-action"
+      ],
+      "status": "Defined"
+    },
+    "destinations": {
+      "sections": [
+        "Gallery with 3 interactive cards",
+        "Detailed destination information",
+        "Activity descriptions",
+        "Pricing and logistics"
+      ],
+      "status": "Defined"
+    },
+    "chatbot": {
+      "sections": [
+        "Floating widget (bottom right)",
+        "Chat interface",
+        "Question suggestions",
+        "Typing animations"
+      ],
+      "status": "Defined"
+    },
+    "reservation": {
+      "sections": [
+        "Destination selector",
+        "Date picker",
+        "Traveler count",
+        "Preferences",
+        "Validation"
+      ],
+      "status": "Optional",
+      "priority": "Low for Phase 1"
+    }
+  },
+  "designSystem": {
+    "colors": {
+      "background": "#1a1a2e",
+      "text": "#f5f5f5",
+      "accent": "#d4af37",
+      "secondary": "#16213e"
+    },
+    "typography": {
+      "headings": "Montserrat or Playfair Display",
+      "body": "Inter or Poppins"
+    },
+    "spacing": {
+      "baseUnit": 8,
+      "containerWidth": 1200
+    },
+    "animations": {
+      "duration": "0.3s - 0.8s",
+      "easing": "ease-in-out"
+    }
+  },
+  "evaluationCriteria": {
+    "technique": {
+      "points": 8,
+      "requirements": [
+        "Webapp functional and deployed",
+        "Code quality and structure",
+        "Session 1 assets properly integrated",
+        "Relevant AI tool usage"
+      ]
+    },
+    "aiFeatures": {
+      "points": 6,
+      "requirements": [
+        "Operational and relevant chatbot",
+        "Automation/personalization features",
+        "AI response consistency with context"
+      ]
+    },
+    "uxui": {
+      "points": 4,
+      "requirements": [
+        "Professional and coherent design",
+        "Intuitive navigation",
+        "Subtle and relevant animations",
+        "Smooth user experience"
+      ]
+    },
+    "documentation": {
+      "points": 2,
+      "requirements": [
+        "Complete and clear README",
+        "Documented prompts",
+        "Credits and transparency",
+        "Process reflection"
+      ]
+    }
+  },
+  "deliverables": {
+    "phase1": {
+      "mockup": "Wireframe or AI-generated mockup",
+      "features": "This comprehensive feature documentation",
+      "specs": "Detailed specifications for all components"
+    },
+    "phase2": {
+      "code": "Generated webapp",
+      "assets": "Integrated Session 1 images",
+      "preview": "Working live preview"
+    },
+    "phase3": {
+      "chatbot": "Integrated AI chatbot widget",
+      "ai": "AI agent fully functional"
+    },
+    "phase4": {
+      "url": "Public deployed link",
+      "repository": "GitHub repo or code export",
+      "readme": "Complete technical documentation"
+    }
+  },
+  "timeline": {
+    "phase1": {
+      "duration": "20 min",
+      "exercise1": "Features Definition (10 min) - ACTIVE ✅",
+      "exercise2": "Mockup Creation (10 min)"
+    },
+    "phase2": {
+      "duration": "50 min",
+      "exercise1": "Setup & Generation (20 min)",
+      "exercise2": "Asset Integration (15 min)",
+      "exercise3": "Animations - Optional (15 min)"
+    },
+    "phase3": {
+      "duration": "40 min",
+      "exercise1": "Chatbot Implementation (40 min)",
+      "exercise2": "Personalization - Optional"
+    },
+    "phase4": {
+      "duration": "10 min",
+      "exercise1": "Documentation (5 min)",
+      "exercise2": "Deployment (5 min)"
+    }
+  },
+  "resources": {
+    "vibeCodingTools": [
+      {
+        "name": "Bolt.new",
+        "type": "Cloud IDE",
+        "cost": "Free 1M tokens",
+        "bestFor": "Rapid complete generation"
+      },
+      {
+        "name": "Lovable.dev",
+        "type": "Freemium IDE",
+        "cost": "Freemium",
+        "bestFor": "Intuitive interface"
+      },
+      {
+        "name": "Cursor",
+        "type": "IDE with AI",
+        "cost": "Free for students",
+        "bestFor": "Developers with GitHub Education"
+      }
+    ],
+    "aiModels": [
+      {
+        "name": "Claude 4.5 Sonnet",
+        "provider": "Anthropic",
+        "bestFor": "Web development"
+      },
+      {
+        "name": "Mistral",
+        "provider": "Mistral AI",
+        "bestFor": "Code generation, chatbot"
+      },
+      {
+        "name": "Groq",
+        "provider": "Groq",
+        "bestFor": "Ultra-fast inference"
+      }
+    ],
+    "hosting": [
+      {
+        "name": "Vercel",
+        "cost": "Free unlimited",
+        "note": "1-click deploy from Bolt"
+      },
+      {
+        "name": "Netlify",
+        "cost": "Free",
+        "note": "Drag and drop"
+      }
+    ]
+  },
+  "createdDate": "2026-03-26",
+  "nextStep": "Phase 1.2 - Mockup Creation (10 min)",
+  "notes": [
+    "All destinations fully defined with content",
+    "Chatbot personality documented comprehensively",
+    "Session 1 image placeholders ready for URLs",
+    "Design system preliminary - finalize in Phase 2",
+    "Team alignment checkpoint before Phase 2"
+  ]
+}
