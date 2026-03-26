@@ -1,39 +1,20 @@
-// Destination Gallery Component with Lazy Loading Grid
-// File: src/components/DestinationGallery.jsx
-
-import React, { useState, useEffect } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import DestinationCard from './DestinationCard'
 import { getImageUrl } from '../constants/assets'
 import './DestinationGallery.css'
 
 const DestinationGallery = ({ destinations, onDestinationSelect, selectedDestinationId }) => {
-  const [isLoading, setIsLoading] = useState(true)
+  const imageUrlsById = useMemo(() => {
+    return destinations.reduce((acc, destination) => {
+      acc[destination.id] = getImageUrl(destination.id)
+      return acc
+    }, {})
+  }, [destinations])
 
-  useEffect(() => {
-    // Simulate content loading
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 300)
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  const handleCardClick = (destinationId) => {
+  const handleCardClick = useCallback((destinationId) => {
     onDestinationSelect?.(destinationId)
-  }
-
-  if (isLoading) {
-    return (
-      <section className="destination-gallery loading">
-        <div className="gallery-skeleton">
-          {[1, 2, 3].map(i => (
-            <div key={i} className="skeleton-card"></div>
-          ))}
-        </div>
-      </section>
-    )
-  }
+  }, [onDestinationSelect])
 
   return (
     <section className="destination-gallery" id="destinations">
@@ -57,7 +38,7 @@ const DestinationGallery = ({ destinations, onDestinationSelect, selectedDestina
         {/* Destination Cards Grid */}
         <div className="cards-grid">
           {destinations.map((destination, index) => {
-            const imageUrl = getImageUrl(destination.id)
+            const imageUrl = imageUrlsById[destination.id]
 
             return (
               <DestinationCard
@@ -90,4 +71,4 @@ const DestinationGallery = ({ destinations, onDestinationSelect, selectedDestina
   )
 }
 
-export default DestinationGallery
+export default memo(DestinationGallery)

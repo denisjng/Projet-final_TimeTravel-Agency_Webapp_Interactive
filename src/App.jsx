@@ -1,83 +1,77 @@
-import { useMemo, useState } from 'react'
-import { motion } from 'framer-motion'
-import DestinationGallery from './components/DestinationGallery'
-import { DESTINATIONS } from './data/destinations'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
+import SiteHeader from './components/SiteHeader'
+import SiteFooter from './components/SiteFooter'
 import './styles/app.css'
 
-const containerVariants = {
-  hidden: { opacity: 0, y: 24 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: 'easeOut',
-      staggerChildren: 0.12,
-    },
-  },
-}
+const HomePage = lazy(() => import('./pages/HomePage'))
+const DestinationsPage = lazy(() => import('./pages/DestinationsPage'))
+const ExperiencePage = lazy(() => import('./pages/ExperiencePage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+const PAGE_IDS = ['home', 'destinations', 'experience', 'contact']
+
+const getPageFromHash = () => {
+  if (typeof window === 'undefined') return 'home'
+  const raw = window.location.hash.replace('#', '').trim()
+  return PAGE_IDS.includes(raw) ? raw : 'home'
 }
 
 function App() {
+  const [activePage, setActivePage] = useState(getPageFromHash)
   const [selectedDestinationId, setSelectedDestinationId] = useState('paris-1889')
+  const [menuOpen, setMenuOpen] = useState(false)
 
-  const selectedDestination = useMemo(
-    () => DESTINATIONS.find((d) => d.id === selectedDestinationId),
-    [selectedDestinationId]
-  )
+  useEffect(() => {
+    const onHashChange = () => setActivePage(getPageFromHash())
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+
+  const handleNavigate = useCallback((pageId) => {
+    if (!PAGE_IDS.includes(pageId)) return
+    window.location.hash = pageId
+    setActivePage(pageId)
+    setMenuOpen(false)
+  }, [])
+
+  const pageContent = useMemo(() => {
+    if (activePage === 'destinations') {
+      return (
+        <DestinationsPage
+          selectedDestinationId={selectedDestinationId}
+          setSelectedDestinationId={setSelectedDestinationId}
+        />
+      )
+    }
+
+    if (activePage === 'experience') {
+      return <ExperiencePage />
+    }
+
+    if (activePage === 'contact') {
+      return <ContactPage />
+    }
+
+    return <HomePage onNavigate={handleNavigate} />
+  }, [activePage, handleNavigate, selectedDestinationId])
 
   return (
     <div className="app-shell">
-      <motion.header
-        className="hero"
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
-      >
-        <motion.p className="hero-kicker" variants={itemVariants}>
-          TimeTravel Agency
-        </motion.p>
-        <motion.h1 className="hero-title" variants={itemVariants}>
-          Explorez les epoques les plus mythiques
-        </motion.h1>
-        <motion.p className="hero-subtitle" variants={itemVariants}>
-          Un rendu complet des phases 2.1, 2.2 et 2.3: application React, assets locaux,
-          lazy loading et animations fluides.
-        </motion.p>
+      <SiteHeader
+        activePage={activePage}
+        onNavigate={handleNavigate}
+        menuOpen={menuOpen}
+        onToggleMenu={() => setMenuOpen((prev) => !prev)}
+        onCloseMenu={() => setMenuOpen(false)}
+      />
 
-        <motion.div className="hero-stats" variants={itemVariants}>
-          <span>3 destinations</span>
-          <span>Images locales optimisees</span>
-          <span>Animations Framer Motion</span>
-        </motion.div>
-      </motion.header>
-
-      <main>
-        <DestinationGallery
-          destinations={DESTINATIONS}
-          onDestinationSelect={setSelectedDestinationId}
-          selectedDestinationId={selectedDestinationId}
-        />
-
-        <motion.section
-          className="selection-panel"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.55, ease: 'easeOut' }}
-        >
-          <h2>Destination selectionnee</h2>
-          <p>
-            {selectedDestination
-              ? `${selectedDestination.name} (${selectedDestination.year}) a partir de ${selectedDestination.price.min} EUR.`
-              : 'Selectionnez une destination.'}
-          </p>
-        </motion.section>
+      <main className="main-content">
+        <Suspense fallback={<div className="page-loader">Chargement...</div>}>
+          {pageContent}
+        </Suspense>
       </main>
+
+      <SiteFooter />
     </div>
   )
 }

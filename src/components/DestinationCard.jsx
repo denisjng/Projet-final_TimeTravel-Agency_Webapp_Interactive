@@ -1,7 +1,4 @@
-// Reusable Destination Card Component with Image Optimization
-// File: src/components/DestinationCard.jsx
-
-import React, { useState } from 'react'
+import { memo, useState } from 'react'
 import { motion } from 'framer-motion'
 import './DestinationCard.css'
 
@@ -15,13 +12,27 @@ const DestinationCard = ({ destination, imageUrl, onCardClick, isSelected = fals
 
   const handleImageError = () => {
     setImageError(true)
-    console.error(`Failed to load image for ${destination.name}`)
+  }
+
+  const handleActivate = () => {
+    onCardClick?.(destination.id)
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleActivate()
+    }
   }
 
   return (
     <motion.article
       className={`destination-card ${isSelected ? 'is-selected' : ''}`}
-      onClick={() => onCardClick?.(destination.id)}
+      onClick={handleActivate}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-pressed={isSelected}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -32,9 +43,7 @@ const DestinationCard = ({ destination, imageUrl, onCardClick, isSelected = fals
       <div className="card-image-wrapper">
         {/* Skeleton Loader - Shows while image loads */}
         {!imageLoaded && !imageError && (
-          <div className="image-skeleton" aria-hidden="true">
-            <div className="shimmer"></div>
-          </div>
+          <div className="image-skeleton" aria-hidden="true"></div>
         )}
 
         {/* Error Fallback */}
@@ -64,7 +73,7 @@ const DestinationCard = ({ destination, imageUrl, onCardClick, isSelected = fals
 
         {/* Hover Overlay */}
         <div className="card-overlay">
-          <button className="discover-button">Découvrir</button>
+          <button className="discover-button" type="button">Découvrir</button>
         </div>
       </div>
 
@@ -100,4 +109,4 @@ const DestinationCard = ({ destination, imageUrl, onCardClick, isSelected = fals
   )
 }
 
-export default DestinationCard
+export default memo(DestinationCard)

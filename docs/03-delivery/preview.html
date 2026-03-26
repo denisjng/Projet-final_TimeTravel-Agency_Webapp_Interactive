@@ -13,6 +13,42 @@
       background: #1a1a2e;
       color: #f5f5f5;
     }
+
+    .video-preview-section {
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+
+    .video-preview-section h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .video-card {
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(15, 22, 42, 0.7);
+    }
+
+    .video-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: #d4af37;
+    }
+
+    .video-card video {
+      width: 100%;
+      border-radius: 10px;
+      background: #0b1020;
+    }
   </style>
 </head>
 <body>
@@ -29,6 +65,24 @@
         <p>3 destinations disponibles</p>
         <button class="cta-button-secondary" type="button">Commencer le voyage</button>
       </footer>
+    </div>
+  </section>
+
+  <section class="video-preview-section">
+    <h2>Videos des destinations (Phase 2.2)</h2>
+    <div class="video-grid">
+      <article class="video-card">
+        <h3>Paris 1889</h3>
+        <video src="../../assets/TimeTravelAgency_Phase3-1_DenisPOPESCU_Paris.mp4" controls muted loop preload="metadata"></video>
+      </article>
+      <article class="video-card">
+        <h3>Cretace</h3>
+        <video src="../../assets/TimeTravelAgency_Phase3-1_DenisPOPESCU_Cretace.mp4" controls muted loop preload="metadata"></video>
+      </article>
+      <article class="video-card">
+        <h3>Florence 1504</h3>
+        <video src="../../assets/TimeTravelAgency_Phase3-1_DenisPOPESCU_Florence.mp4" controls muted loop preload="metadata"></video>
+      </article>
     </div>
   </section>
 

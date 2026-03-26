@@ -24,6 +24,18 @@ For app usage, keep absolute public-style paths in `src/constants/assets.js`:
 - `/assets/Cretace.png`
 - `/assets/Florence.png`
 
+## Active Destination Videos
+
+- Paris 1889: `/assets/TimeTravelAgency_Phase3-1_DenisPOPESCU_Paris.mp4`
+- Cretace: `/assets/TimeTravelAgency_Phase3-1_DenisPOPESCU_Cretace.mp4`
+- Florence 1504: `/assets/TimeTravelAgency_Phase3-1_DenisPOPESCU_Florence.mp4`
+
+## Preview Video Paths
+
+- Paris: `../../assets/TimeTravelAgency_Phase3-1_DenisPOPESCU_Paris.mp4`
+- Cretace: `../../assets/TimeTravelAgency_Phase3-1_DenisPOPESCU_Cretace.mp4`
+- Florence: `../../assets/TimeTravelAgency_Phase3-1_DenisPOPESCU_Florence.mp4`
+
 ## Notes
 
 - If you rename a file in `assets/`, update both `src/constants/assets.js` and `docs/03-delivery/preview.html`.
