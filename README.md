@@ -265,7 +265,47 @@ timetravel-agency-webapp/
 
 ## 🚀 Déploiement
 
-### Vercel (Recommandé pour Vite)
+### GitHub Pages (Recommandé - Gratuit & Automatisé) ⭐
+
+#### Configuration Initiale
+
+1. **Créer un repository GitHub**
+   ```bash
+   # Si ce n'est pas encore fait
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/YOUR_USERNAME/timetravel-agency-webapp.git
+   git push -u origin main
+   ```
+
+2. **Configurer GitHub Pages**
+   - Aller dans **Settings** du repository
+   - Aller dans **Pages** (à gauche)
+   - **Source** : Select `GitHub Actions`
+   - **Custom domain** : (optionnel)
+
+3. **Le workflow automatique prend le relais!** ✨
+   - Chaque `git push` sur `main` déclenche le build + déploiement
+   - Site accessible à: `https://YOUR_USERNAME.github.io/timetravel-agency-webapp/`
+
+#### Important: Remplacer le nom du repository
+
+Dans `vite.config.js`, remplace `timetravel-agency-webapp` par le **vrai nom de ton repository**:
+```javascript
+base: process.env.GITHUB_PAGES ? '/ton-repository-name/' : '/',
+```
+
+#### Vérifier le déploiement
+- Aller dans **Actions** (onglet du repo)
+- Voir les workflows en cours/complétés
+- Les logs détaillés sont disponibles pour debug
+
+---
+
+### Vercel (Alternative - 1 clic + Custom Domain gratuit)
+
 ```bash
 # Installer Vercel CLI
 npm install -g vercel
@@ -273,30 +313,58 @@ npm install -g vercel
 # Déployer
 vercel
 
-# Variables d'environnement via dashboard Vercel
-# Settings > Environment Variables
-# VITE_MISTRAL_API_KEY = ta_clé_ici
+# Suivre les prompts interactifs
+# - Connect GitHub? → Yes
+# - Deploy? → Yes
 ```
 
-### Netlify
+Site accessible à: `https://timetravel-agency-webapp.vercel.app` (ou domain custom)
+
+---
+
+### Netlify (Alternative - Drag & Drop)
+
 ```bash
-# Installer Netlify CLI
-npm install -g netlify-cli
-
-# Déployer
-netlify deploy --prod --dir=dist
-
-# Ou connecter GitHub repo automatiquement
-```
-
-### GitHub Pages
-```bash
-# Build
+# 1. Build localement
 npm run build
 
-# Pusher dist/ sur branche gh-pages
-# (Configuration dans vite.config.js si subdomain)
+# 2. Drag & drop le dossier 'dist/' sur Netlify.com
+# Ou installer Netlify CLI:
+npm install -g netlify-cli
+netlify deploy --prod --dir=dist
 ```
+
+Site accessible à: `https://YOUR-SITE.netlify.app`
+
+---
+
+### Tests Post-Déploiement ✅
+
+Après déploiement, tester:
+
+- [ ] **Page d'accueil** : Hero, offres, navigation chargent bien
+- [ ] **Gallery destinations** : Images/vidéos display, filtres/tri fonctionnent
+- [ ] **Formulaire contact** : Validation, soumission fonctionnent
+- [ ] **Chatbot Victor** :
+  - Widget apparait en bas-droit
+  - Questions rapides chargent
+  - Réponses IA générées (vérifier clé API en production)
+  - Quiz fonctionne
+- [ ] **Responsive** : Tester sur mobile (tablet + phone)
+- [ ] **Perfs** : Console dev fermé (pas d'erreurs, warnings mineurs ok)
+- [ ] **SSL** : Vérifier lock icon (https://)
+
+---
+
+## 🔧 Troubleshooting Déploiement
+
+| Problème | Solution |
+|---|---|
+| **404 sur GitHub Pages** | Vérifier `base:` dans vite.config.js = nom du repo |
+| **Chatbot ne répond pas** | Mettre la clé Mistral en secret GitHub Actions |
+| **Images/vidéos ne load** | Vérifier chemins dans `public/` |
+| **Build échoue (Actions)** | Voir logs dans onglet **Actions** → workflow |
+| **Domain custom ne fonctionne pas** | Vérifier CNAME + settings GitHub Pages |
 
 ---
 
