@@ -2,6 +2,28 @@
 
 Projet IA M1 centré sur une webapp de voyages temporels, avec documentation de phases, composants UI réutilisables et guides d'intégration d'assets.
 
+## Implementation Status
+
+- Phase 2.1: Complete (React + Vite app scaffolded)
+- Phase 2.2: Complete (local assets integrated, lazy loading active)
+- Phase 2.3: Complete (Framer Motion animations integrated)
+
+## Run Locally
+
+Prerequisite: Node.js 18+ installed.
+
+```bash
+npm install
+npm run dev
+```
+
+Build production bundle:
+
+```bash
+npm run build
+npm run preview
+```
+
 ## Project Goals
 
 - Construire une expérience web interactive autour de 3 destinations temporelles
@@ -25,7 +47,10 @@ Projet IA M1 centré sur une webapp de voyages temporels, avec documentation de 
 |  |- 03-delivery/
 |  |- reference/
 |  `- README.md
+|- index.html
+|- package.json
 |- src/
+|  |- App.jsx
 |  |- components/
 |  |  |- DestinationCard.css
 |  |  |- DestinationCard.jsx
@@ -33,6 +58,12 @@ Projet IA M1 centré sur une webapp de voyages temporels, avec documentation de 
 |  |  `- DestinationGallery.jsx
 |  `- constants/
 |     `- assets.js
+|  |- data/
+|  |  `- destinations.js
+|  |- styles/
+|  |  |- app.css
+|  |  `- global.css
+|  `- main.jsx
 `- tools/
 	`- extract_pdf.py
 ```
@@ -47,5 +78,5 @@ Projet IA M1 centré sur une webapp de voyages temporels, avec documentation de 
 
 ## Notes
 
-- Le dépôt contient principalement des artefacts de cadrage et des composants prêts à intégrer.
-- Les URLs d'images doivent être renseignées dans `assets/ASSET_URLS.md` puis propagées dans `src/constants/assets.js`.
+- Le dépôt contient désormais une application front exécutable (Vite + React).
+- Les images de destination sont locales dans `assets/` et référencées dans `src/constants/assets.js`.

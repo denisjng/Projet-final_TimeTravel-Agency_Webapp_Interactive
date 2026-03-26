@@ -2,9 +2,10 @@
 // File: src/components/DestinationCard.jsx
 
 import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 import './DestinationCard.css'
 
-const DestinationCard = ({ destination, imageUrl, onCardClick }) => {
+const DestinationCard = ({ destination, imageUrl, onCardClick, isSelected = false, index = 0 }) => {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
@@ -18,7 +19,15 @@ const DestinationCard = ({ destination, imageUrl, onCardClick }) => {
   }
 
   return (
-    <article className="destination-card" onClick={() => onCardClick?.(destination.id)}>
+    <motion.article
+      className={`destination-card ${isSelected ? 'is-selected' : ''}`}
+      onClick={() => onCardClick?.(destination.id)}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.45, delay: index * 0.08, ease: 'easeOut' }}
+      whileHover={{ y: -8 }}
+    >
       {/* Image Container with Lazy Loading */}
       <div className="card-image-wrapper">
         {/* Skeleton Loader - Shows while image loads */}
@@ -87,7 +96,7 @@ const DestinationCard = ({ destination, imageUrl, onCardClick }) => {
           <span className="duration">{destination.recommendedDays[0]}-{destination.recommendedDays[1]} jours</span>
         </div>
       </div>
-    </article>
+    </motion.article>
   )
 }
 

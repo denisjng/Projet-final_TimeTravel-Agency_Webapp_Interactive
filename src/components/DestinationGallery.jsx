@@ -2,11 +2,12 @@
 // File: src/components/DestinationGallery.jsx
 
 import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import DestinationCard from './DestinationCard'
 import { getImageUrl } from '../constants/assets'
 import './DestinationGallery.css'
 
-const DestinationGallery = ({ destinations, onDestinationSelect }) => {
+const DestinationGallery = ({ destinations, onDestinationSelect, selectedDestinationId }) => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -38,18 +39,24 @@ const DestinationGallery = ({ destinations, onDestinationSelect }) => {
     <section className="destination-gallery" id="destinations">
       <div className="gallery-container">
         {/* Gallery Header */}
-        <div className="gallery-header">
+        <motion.div
+          className="gallery-header"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.45, ease: 'easeOut' }}
+        >
           <h2 className="gallery-title">
             Nos Destinations Temporelles
           </h2>
           <p className="gallery-subtitle">
             Choisissez votre époque, vivez votre histoire
           </p>
-        </div>
+        </motion.div>
 
         {/* Destination Cards Grid */}
         <div className="cards-grid">
-          {destinations.map(destination => {
+          {destinations.map((destination, index) => {
             const imageUrl = getImageUrl(destination.id)
 
             return (
@@ -58,18 +65,26 @@ const DestinationGallery = ({ destinations, onDestinationSelect }) => {
                 destination={destination}
                 imageUrl={imageUrl}
                 onCardClick={handleCardClick}
+                isSelected={selectedDestinationId === destination.id}
+                index={index}
               />
             )
           })}
         </div>
 
         {/* Gallery Footer CTA */}
-        <div className="gallery-footer">
+        <motion.div
+          className="gallery-footer"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.45, delay: 0.1, ease: 'easeOut' }}
+        >
           <p>Vous ne trouvez pas votre époque idéale?</p>
           <button className="cta-button-secondary">
             Explorer d'autres destinations
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -25,6 +25,10 @@
   outline-offset: 4px;
 }
 
+.destination-card.is-selected {
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.7), 0 12px 28px rgba(212, 175, 55, 0.2);
+}
+
 /* Image Wrapper - Fixed Aspect Ratio */
 .card-image-wrapper {
   position: relative;
