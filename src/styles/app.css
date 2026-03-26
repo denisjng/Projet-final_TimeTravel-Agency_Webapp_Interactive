@@ -495,6 +495,38 @@
   border: 1px solid rgba(122, 152, 255, 0.3);
 }
 
+.chat-bubble.assistant p,
+.chat-bubble.assistant ul,
+.chat-bubble.assistant ol {
+  margin: 0;
+}
+
+.chat-bubble.assistant ul,
+.chat-bubble.assistant ol {
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+
+.chat-bubble.assistant li {
+  margin-bottom: 4px;
+}
+
+.chat-bubble.assistant strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+.chat-bubble.assistant em {
+  font-style: italic;
+}
+
+.chat-bubble.assistant code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
 .chat-bubble.assistant.thinking {
   display: inline-flex;
   align-items: center;

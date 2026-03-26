@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import ReactMarkdown from 'react-markdown'
 
 const DESTINATION_INFO = {
   'paris-1889': {
@@ -98,7 +99,13 @@ Tu peux répondre à:
 - FAQ agence de voyage
 - Suggestions de destinations selon les intérêts du client
 
-Sois concis, utile et inspirant. Réponds en français.`
+IMPORTANT: Utilise le markdown pour formater tes réponses:
+- Utilise **gras** pour les éléments importants
+- Utilise des listes à puces (-) et numérotées (1.) pour organiser les informations
+- Utilise des retours à la ligne pour la clarté
+- Utilise *italique* pour les détails pertinents
+
+Sois concis, utile et inspirant. Réponds en français et formate avec du markdown.`
 
 const callMistralAPI = async (userMessage, recommendedDestinationId) => {
   const apiKey = import.meta.env.VITE_MISTRAL_API_KEY
@@ -280,7 +287,37 @@ function ChatbotWidget({ onApplyRecommendation }) {
                 <div className="chat-window" role="log" aria-live="polite" ref={chatWindowRef}>
                   {messages.map((msg, index) => (
                     <article key={`${msg.role}-${index}`} className={`chat-bubble ${msg.role}`}>
-                      {msg.content}
+                      {msg.role === 'assistant' ? (
+                        <ReactMarkdown
+                          components={{
+                            p: ({ node, ...props }) => <p style={{ margin: '0 0 8px 0', lineHeight: '1.4' }} {...props} />,
+                            ul: ({ node, ...props }) => (
+                              <ul style={{ margin: '8px 0', paddingLeft: '20px', lineHeight: '1.5' }} {...props} />
+                            ),
+                            ol: ({ node, ...props }) => (
+                              <ol style={{ margin: '8px 0', paddingLeft: '20px', lineHeight: '1.5' }} {...props} />
+                            ),
+                            li: ({ node, ...props }) => <li style={{ marginBottom: '4px' }} {...props} />,
+                            strong: ({ node, ...props }) => <strong style={{ fontWeight: 700 }} {...props} />,
+                            em: ({ node, ...props }) => <em style={{ fontStyle: 'italic' }} {...props} />,
+                            code: ({ node, ...props }) => (
+                              <code
+                                style={{
+                                  backgroundColor: 'rgba(255,255,255,0.1)',
+                                  padding: '2px 6px',
+                                  borderRadius: '4px',
+                                  fontSize: '0.9em',
+                                }}
+                                {...props}
+                              />
+                            ),
+                          }}
+                        >
+                          {msg.content}
+                        </ReactMarkdown>
+                      ) : (
+                        msg.content
+                      )}
                     </article>
                   ))}
                   {isThinking ? (
