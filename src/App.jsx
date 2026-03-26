@@ -1,6 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import SiteHeader from './components/SiteHeader'
 import SiteFooter from './components/SiteFooter'
+import ChatbotWidget from './components/ChatbotWidget'
 import './styles/app.css'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
@@ -70,6 +71,13 @@ function App() {
           {pageContent}
         </Suspense>
       </main>
+
+      <ChatbotWidget
+        onApplyRecommendation={(destinationId) => {
+          setSelectedDestinationId(destinationId)
+          handleNavigate('destinations')
+        }}
+      />
 
       <SiteFooter />
     </div>
