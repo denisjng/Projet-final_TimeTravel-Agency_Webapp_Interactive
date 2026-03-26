@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TimeTravel Agency - Preview</title>
+  <link rel="stylesheet" href="src/components/DestinationGallery.css" />
+  <link rel="stylesheet" href="src/components/DestinationCard.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a2e;
+      color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <section class="destination-gallery">
+    <div class="gallery-container">
+      <header class="gallery-header">
+        <h1 class="gallery-title">TimeTravel Agency</h1>
+        <p class="gallery-subtitle">Apercu de la maquette des destinations</p>
+      </header>
+
+      <div class="cards-grid" id="cards-grid"></div>
+
+      <footer class="gallery-footer">
+        <p>3 destinations disponibles</p>
+        <button class="cta-button-secondary" type="button">Commencer le voyage</button>
+      </footer>
+    </div>
+  </section>
+
+  <script>
+    const destinations = [
+      {
+        id: "paris-1889",
+        name: "Paris 1889",
+        year: "1889",
+        shortDescription: "Exposition universelle, tour Eiffel naissante et ambiance Belle Epoque.",
+        tags: ["Culture", "Histoire", "Romance"],
+        price: { min: 2500 },
+        recommendedDays: [3, 5],
+        imageUrl: "https://images.unsplash.com/photo-1549144511-f099e773c147?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        id: "cretaceous",
+        name: "Cretace",
+        year: "-100M",
+        shortDescription: "Aventure au milieu des dinosaures et des paysages sauvages prehistoriques.",
+        tags: ["Aventure", "Nature", "Extreme"],
+        price: { min: 5000 },
+        recommendedDays: [5, 7],
+        imageUrl: "https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        id: "florence-1504",
+        name: "Florence 1504",
+        year: "1504",
+        shortDescription: "Renaissance italienne, art majeur et effervescence intellectuelle.",
+        tags: ["Art", "Renaissance", "Architecture"],
+        price: { min: 3200 },
+        recommendedDays: [4, 5],
+        imageUrl: "https://images.unsplash.com/photo-1525874684015-58379d421a52?auto=format&fit=crop&w=1200&q=80"
+      }
+    ];
+
+    const grid = document.getElementById("cards-grid");
+
+    function makeCard(destination, index) {
+      const article = document.createElement("article");
+      article.className = "destination-card";
+      article.style.setProperty("--index", index.toString());
+
+      article.innerHTML = `
+        <div class="card-image-wrapper">
+          <div class="image-skeleton" aria-hidden="true"></div>
+          <img
+            src="${destination.imageUrl}"
+            alt="${destination.name}"
+            loading="lazy"
+            decoding="async"
+            class="destination-hero-image"
+            width="400"
+            height="267"
+          />
+          <span class="era-badge">${destination.year}</span>
+          <div class="card-overlay">
+            <button class="discover-button" type="button">Decouvrir</button>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3 class="destination-name">${destination.name}</h3>
+          <p class="destination-description">${destination.shortDescription}</p>
+          <div class="tags-container">
+            ${destination.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+          </div>
+          <div class="quick-info">
+            <span class="price">A partir de ${destination.price.min}EUR</span>
+            <span class="duration">${destination.recommendedDays[0]}-${destination.recommendedDays[1]} jours</span>
+          </div>
+        </div>
+      `;
+
+      const image = article.querySelector(".destination-hero-image");
+      const skeleton = article.querySelector(".image-skeleton");
+
+      image.addEventListener("load", () => {
+        image.classList.add("loaded");
+        if (skeleton) skeleton.remove();
+      });
+
+      image.addEventListener("error", () => {
+        if (skeleton) skeleton.remove();
+        const wrapper = article.querySelector(".card-image-wrapper");
+        const errorNode = document.createElement("div");
+        errorNode.className = "image-error";
+        errorNode.textContent = "Image non disponible";
+        wrapper.appendChild(errorNode);
+      });
+
+      return article;
+    }
+
+    destinations.forEach((destination, index) => {
+      grid.appendChild(makeCard(destination, index));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+/* DestinationCard Styles with Lazy Loading Optimization */
+/* File: src/components/DestinationCard.css */
+
+.destination-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #16213e;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hover Effects */
+.destination-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(212, 175, 55, 0.25);
+}
+
+.destination-card:focus-within {
+  outline: 2px solid #d4af37;
+  outline-offset: 4px;
+}
+
+/* Image Wrapper - Fixed Aspect Ratio */
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 66.67%; /* 3:2 aspect ratio */
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+/* Main Image - Lazy Loaded */
+.destination-hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.destination-hero-image.loaded {
+  opacity: 1;
+}
+
+/* Skeleton Loader - Shows during load */
+.image-skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #2a2a3e 0%,
+    #3a3a4e 25%,
+    #2a2a3e 50%,
+    #3a3a4e 75%,
+    #2a2a3e 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Error State */
+.image-error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a2e;
+  color: #d4af37;
+  font-size: 14px;
+  text-align: center;
+  padding: 16px;
+}
+
+/* Era Badge */
+.era-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(212, 175, 55, 0.9);
+  color: #1a1a2e;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 3;
+  backdrop-filter: blur(4px);
+}
+
+/* Hover Overlay */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.destination-card:hover .card-overlay {
+  opacity: 1;
+}
+
+/* Discover Button */
+.discover-button {
+  background: #d4af37;
+  color: #1a1a2e;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.discover-button:hover {
+  background: #e5c158;
+  transform: scale(1.05);
+}
+
+.discover-button:active {
+  transform: scale(0.98);
+}
+
+/* Card Content */
+.card-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Destination Name */
+.destination-name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #f5f5f5;
+  line-height: 1.2;
+}
+
+/* Description */
+.destination-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #b0b0b8;
+  flex: 1;
+}
+
+/* Tags Container */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tag {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.15);
+  color: #d4af37;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.tag-more {
+  background: rgba(255, 255, 255, 0.1);
+  color: #b0b0b8;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Quick Info */
+.quick-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #8a8a94;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.price {
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.duration {
+  color: #b0b0b8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .destination-card {
+    border-radius: 10px;
+  }
+
+  .card-content {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .destination-name {
+    font-size: 18px;
+  }
+
+  .destination-description {
+    font-size: 13px;
+  }
+
+  .discover-button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .destination-card {
+    border-radius: 8px;
+  }
+
+  .card-image-wrapper {
+    padding-bottom: 75%; /* Adjust aspect ratio for mobile */
+  }
+
+  .card-content {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .destination-name {
+    font-size: 16px;
+  }
+
+  .destination-description {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .era-badge {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  .tags-container {
+    gap: 6px;
+  }
+
+  .quick-info {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .destination-card,
+  .destination-hero-image,
+  .card-overlay,
+  .discover-button {
+    transition: none;
+    animation: none;
+  }
+
+  .destination-card:hover {
+    transform: none;
+  }
+}
+
+/* Dark Mode Support (already dark, but for future) */
+@media (prefers-color-scheme: dark) {
+  .destination-card {
+    background: #16213e;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .card-overlay,
+  .image-skeleton {
+    display: none;
+  }
+
+  .destination-card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
